@@ -2,21 +2,28 @@
 
 var pixWidth = 10,
 	pixHeight = 3,
-	pixSize = 100,
-	xOffset = 10,
-	yOffset = 10,
-	channelOffset = 28,
-	subPixSize = 8,
+	pixSize = 12,
+	xOffset = 1,
+	yOffset = 1,
+	channelOffset = 4,
+	subPixSize = 1,
+	pixGap = 0,
+	subPixGap = 0,
 	cols = [ '#f00', '#0f0', '#00f' ];
 
 document.addEventListener('DOMContentLoaded', e => {
 	let canvas = document.getElementById('canvas'),
-		image = document.getElementById('image'),
-		ctx = canvas.getContext('2d');
+		image = document.getElementById('image');
 	image.addEventListener('load', e => {
+		let ctx = canvas.getContext('2d');
 		// read the image
 		ctx.drawImage(image, 0, 0);
 		let imageData = ctx.getImageData(0, 0, image.width, image.height);
+		// draw the new one
+		canvas.width = pixSize * image.width;
+		canvas.height = pixSize * image.height;
+		ctx = canvas.getContext('2d');
+		box(0, 0, canvas.width, canvas.height, '#444');
 		for (let x = 0; x < image.width; ++x)
 			for (let y = 0; y < image.height; ++y) {
 				let i = (x + y * image.height) * 4,
@@ -26,25 +33,26 @@ document.addEventListener('DOMContentLoaded', e => {
 						imageData.data[i + 2]
 					].map(c => (c / 255) * pixWidth * pixHeight),
 					grid = pixelizer(pixel);
-				box(x * pixSize, y * pixSize, pixSize - 1, pixSize - 1, 'black');
+				box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, 'black');
 				cols.forEach((col, i) => {
 					for (let py = 0; py < pixHeight; ++py)
 						for (let px = 0; px < pixWidth; ++px)
 							box(x * pixSize + xOffset + px * subPixSize,
 								y * pixSize + yOffset + py * subPixSize + channelOffset * i,
-								subPixSize - 1,
-								subPixSize - 1,
+								subPixSize - subPixGap,
+								subPixSize - subPixGap,
 								grid[i][py][px] ? col : '#444');
 				});
 			}
+
+		function box(x, y, w, h, colour) {
+			ctx.beginPath();
+			ctx.fillStyle = colour;
+			ctx.rect(x, y, w, h);
+			ctx.fill();
+		}
 	});
 
-	function box(x, y, w, h, colour) {
-		ctx.beginPath();
-		ctx.fillStyle = colour;
-		ctx.rect(x, y, w, h);
-		ctx.fill();
-	}
 });
 
 function pixelizer(pixel) {
