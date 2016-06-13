@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 });
 
-function pixelizer(pixel) {
+function topLeftPixelizer(pixel) {
 	return pixel.slice(0, 3)
 		.map(c => {
 			let arr = [];
@@ -68,3 +68,27 @@ function pixelizer(pixel) {
 			return arr;
 		});
 }
+
+function randomPixelizer(pixel) {
+	return pixel.slice(0, 3)
+		.map(c => {
+			let arr = [];
+			for (let y = 0; y < pixHeight; ++y) {
+				let row = [];
+				for (let x = 0; x < pixWidth; ++x)
+					row.push(false);
+				arr.push(row);
+			}
+			while (c --> 0) while (true) {
+				var x = ~~(Math.random() * pixWidth),
+					y = ~~(Math.random() * pixHeight);
+				if (!arr[y][x]) {
+					arr[y][x] = true;
+					break;
+				}
+			}
+			return arr;
+		});
+}
+
+var pixelizer = randomPixelizer;
