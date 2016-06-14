@@ -91,4 +91,9 @@ function randomPixelizer(pixel) {
 		});
 }
 
-var pixelizer = randomPixelizer;
+function pixelizer(pixel) {
+	return (Math.random() > 0.5
+		? topLeftPixelizer
+		: randomPixelizer)
+			(pixel);
+}
