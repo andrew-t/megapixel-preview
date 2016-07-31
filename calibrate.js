@@ -7,8 +7,12 @@ function hex2rgb(hex) {
 	if (hex[0] == '#')
 		hex = hex.substr(1);
 	let row = [];
-	for (let i = 0; i < 3; ++i)
-		row.push(parseInt(hex.substr(i * 2, 2), 16) / 0xff);
+	for (let i = 0; i < 3; ++i) {
+		let c = parseInt(hex.substr(i * 2, 2), 16) / 0xff;
+		// apply gamma
+		c = Math.pow(c, 1 / data.gamma);
+		row.push(c);
+	}
 	return row;
 }
 

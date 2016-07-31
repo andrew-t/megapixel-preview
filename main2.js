@@ -4,8 +4,8 @@ var v, v2, v3;
 document.addEventListener('DOMContentLoaded', e => {
 
 // calc'd in other file
-var m = [[1.07,-0.11,-0.34],[-0.05,2.02,-0.71],[-0.04,-0.91,1.43]],
-	p = [[0.96,0.2,0.33],[0.04,0.64,0.33],[0.05,0.42,0.91]];
+var m = [[1.24,-0.19,-0.65],[-0.21,2.54,-1.46],[-0.19,-1.73,2.24]],
+	p = [[0.98,0.48,0.6],[0.23,0.82,0.6],[0.26,0.67,0.96]];
 
 var canvas = document.getElementById('canvas'),
 	canvas2 = document.getElementById('canvas2'),
@@ -27,14 +27,27 @@ for (let x = 0; x < image.width; ++x)
 				imageData.data[i++] / 255
 			];
 		i++; // skip alpha
-		v.push(pixel);
+		v.push(pixel.map(v =>
+			Math.pow(v, 1/2.2)));
 	}
 
-v2 = clamp(mmult(v, m));
-v3 = clamp(mmult(v2, p));
+// v2 = clamp(mmult(v, m));
+// v3 = clamp(mmult(v2, p));
 
-draw(v2, canvas);
-draw(v3, canvas2);
+// v2 = scale(mmult(v, m));
+// v3 = scale(mmult(v2, p));
+
+// v2 = manscale(mmult(v, m), 0, 1.5);
+// v3 = manscale(mmult(v2, p), 0, 1 / 1.5);
+
+// v2 = mmult(v, m);
+// v3 = mmult(v2, p);
+
+v2 = mmult(v, m);
+v3 = mmult(clamp(v2), p);
+
+draw(v2, canvas, 1);
+draw(v3, canvas2, 2.2);
 
 canvas.addEventListener('mousemove', explain);
 canvas2.addEventListener('mousemove', explain);
@@ -78,7 +91,18 @@ function clamp(v) {
 		(c < 1) ? (c > 0) ? c : 0 : 1))
 }
 
-function draw(v, canvas) {
+function scale(v) {
+	var max = Math.max(...v.map(p => Math.max(...p))),
+		min = Math.min(...v.map(p => Math.min(...p)));
+	return manscale(v, min, max);
+}
+function manscale(v, min, max) {
+	return v.map(p => p.map(c =>
+		(c - min) / (max - min)
+	));
+}
+
+function draw(v, canvas, gamma) {
 	var ctx = canvas.getContext('2d');
 	var i = 0, j = 0;
 
@@ -89,9 +113,9 @@ function draw(v, canvas) {
 		for (let y = 0; y < image.height; ++y) {
 			var pixel = v[i++];
 			// console.log(pixel)
-			d[j++] = pixel[0] * 255;
-			d[j++] = pixel[1] * 255;
-			d[j++] = pixel[2] * 255;
+			d[j++] = Math.pow(pixel[0], gamma) * 255;
+			d[j++] = Math.pow(pixel[1], gamma) * 255;
+			d[j++] = Math.pow(pixel[2], gamma) * 255;
 			d[j++] = 255; // alpha
 		}
 
