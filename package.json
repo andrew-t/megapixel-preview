@@ -1,0 +1,22 @@
+{
+  "name": "megapixel-preview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-t/megapixel-preview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrew-t/megapixel-preview/issues"
+  },
+  "homepage": "https://github.com/andrew-t/megapixel-preview#readme",
+  "dependencies": {
+    "mathjs": "^3.3.0"
+  }
+}

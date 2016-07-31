@@ -93,3 +93,5 @@ function matrix_invert(M){
     //matrix I should be the inverse:
     return I;
 }
+
+module.exports = matrix_invert;

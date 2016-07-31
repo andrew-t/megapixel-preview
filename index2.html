@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Megapixel Preview</title>
+	<script type="text/javascript" src="main2.js"></script>
+	<style type="text/css">
+		.swatch { width: 64px; height: 64px; display: inline-block; }
+	</style>
+</head>
+<body>
+	<img src="image.png" id="image" width="64" height="64">
+	<canvas id="canvas" width="64" height="64" style="height: 100%"></canvas>
+	<canvas id="canvas2" width="64" height="64" style="height: 100%"></canvas>
+	<!--canvas id="canvas3" width="6400" height="6400" style="height: 100%"></canvas-->
+	<div id="exp">
+		
+		at
+		<div id="coords"></div>
+		,
+		<div id="v"></div>
+		* M = <br>
+		<div id="v2"></div>
+		for a final RGB of
+		<div id="v3"></div>
+		and an error of
+		<div id="error"></div>
+
+		<div class="swatch" id="swatch-v"></div><div class="swatch" id="swatch-v3"></div>
+
+		<div class="swatch" id="swatch-v2"></div>
+
+	</div>
+</body>
+</html>

@@ -1,30 +1,20 @@
 'use strict';
 
-var pixWidth = 10,
-	pixHeight = 3,
+var pixWidth = 12,
+	pixHeight = 4,
 	pixSize = 12,
-	xOffset = 1,
-	yOffset = 1,
+	xOffset = 0,
+	yOffset = 0,
 	channelOffset = 4,
 	subPixSize = 1,
 	gamma = 1.2,
 	pixGap = 0,
 	subPixGap = 0,
-	cols = [ '#a91b0f', '#012c19', '#0a2471' ],
-	multipliers = [ 0xff / 0xa9, 0xff / 0x2c, 0xff / 0x71 ],
-	black = '#121011',
+	//cols = [ '#ff0000', '#00ff00', '#0000ff' ],
+	cols = [ "#f43353", "#0aa453", "#0d6ae9" ],
+	multiplier = .5, //.15,
+	black = '#000', //'#121011',
 	frame = '#000000';
-
-let maxMultiplier = Math.max(...multipliers);
-multipliers = multipliers.map(x => x / maxMultiplier);
-
-let sRGB2penRGB = cols.map(col => {
-		let row = [];
-		for (let i = 0; i < 3; ++i)
-			row.push(parseInt(col.substr(i * 2 + 1, 2), 16) / 0xff);
-		return row;
-	}),
-	penRGB2sRGB = matrix_invert(sRGB2penRGB);
 
 document.addEventListener('DOMContentLoaded', e => {
 	let canvas = document.getElementById('canvas'),
@@ -46,12 +36,9 @@ document.addEventListener('DOMContentLoaded', e => {
 						imageData.data[i],
 						imageData.data[i + 1],
 						imageData.data[i + 2]
-					].map((c, i) => {
-						let max = pixWidth * pixHeight,
-							raw = Math.pow(c / 255, gamma) * max * multipliers[i];
-						return raw > max ? max : raw;
-					}),
-					grid = pixelizer(pixel);
+					],
+					max = pixHeight * pixWidth;
+				let grid = pixelizer(pixel.map(x => ~~(x * max / 255)));
 				box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, frame);
 				cols.forEach((col, i) => {
 					for (let py = 0; py < pixHeight; ++py)
