@@ -4,8 +4,8 @@ var v, v2, v3;
 document.addEventListener('DOMContentLoaded', e => {
 
 // calc'd in other file
-var m = [[1.24,-0.19,-0.65],[-0.21,2.54,-1.46],[-0.19,-1.73,2.24]],
-	p = [[0.98,0.48,0.6],[0.23,0.82,0.6],[0.26,0.67,0.96]];
+var m = [[1.1,-0.04,-0.11],[0,2.75,-0.28],[0,-0.49,1.27]],
+	p = [[0.91,0.03,0.08],[0,0.38,0.08],[0,0.14,0.82]];
 
 var canvas = document.getElementById('canvas'),
 	canvas2 = document.getElementById('canvas2'),
@@ -28,11 +28,11 @@ for (let x = 0; x < image.width; ++x)
 			];
 		i++; // skip alpha
 		v.push(pixel.map(v =>
-			Math.pow(v, 1/2.2)));
+			Math.pow(v, 2.2)));
 	}
 
-// v2 = clamp(mmult(v, m));
-// v3 = clamp(mmult(v2, p));
+v2 = clamp(mmult(v, m));
+v3 = clamp(mmult(v2, p));
 
 // v2 = scale(mmult(v, m));
 // v3 = scale(mmult(v2, p));
@@ -43,11 +43,11 @@ for (let x = 0; x < image.width; ++x)
 // v2 = mmult(v, m);
 // v3 = mmult(v2, p);
 
-v2 = mmult(v, m);
-v3 = mmult(clamp(v2), p);
+// v2 = mmult(v, m);
+// v3 = mmult(clamp(v2), p);
 
 draw(v2, canvas, 1);
-draw(v3, canvas2, 2.2);
+draw(v3, canvas2, 1 / 2.2);
 
 canvas.addEventListener('mousemove', explain);
 canvas2.addEventListener('mousemove', explain);

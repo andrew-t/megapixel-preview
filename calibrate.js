@@ -2,6 +2,9 @@ var math = require('mathjs'),
 	inv = require('./inv');
 
 var data = require('./edding.json');
+// The model becomes useless if you use gamma
+// because there's too much negative light needed
+// data.gamma = 1.0;
 
 function hex2rgb(hex) {
 	if (hex[0] == '#')
@@ -10,7 +13,7 @@ function hex2rgb(hex) {
 	for (let i = 0; i < 3; ++i) {
 		let c = parseInt(hex.substr(i * 2, 2), 16) / 0xff;
 		// apply gamma
-		c = Math.pow(c, 1 / data.gamma);
+		c = Math.pow(c, data.gamma);
 		row.push(c);
 	}
 	return row;

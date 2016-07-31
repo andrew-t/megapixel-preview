@@ -18,7 +18,8 @@ var pixWidth = 12,
 
 document.addEventListener('DOMContentLoaded', e => {
 	let canvas = document.getElementById('canvas'),
-		image = document.getElementById('image');
+		image = document.getElementById('image'),
+		reality = document.getElementById('reality');
 	image.addEventListener('load', e => {
 		let ctx = canvas.getContext('2d');
 		// read the image
@@ -27,6 +28,8 @@ document.addEventListener('DOMContentLoaded', e => {
 		// draw the new one
 		canvas.width = pixSize * image.width;
 		canvas.height = pixSize * image.height;
+		reality.width = pixSize * image.width;
+		reality.height = pixSize * image.height;
 		ctx = canvas.getContext('2d');
 		// box(0, 0, canvas.width, canvas.height, frame);
 		for (let x = 0; x < image.width; ++x)
@@ -38,7 +41,8 @@ document.addEventListener('DOMContentLoaded', e => {
 						imageData.data[i + 2]
 					],
 					max = pixHeight * pixWidth;
-				let grid = pixelizer(pixel.map(x => ~~(x * max / 255)));
+				// let grid = pixelizer(pixel.map(x => ~~(Math.pow(x / 255, 2.2) * max)));
+				let grid = pixelizer(pixel.map(x => ~~((x / 255) * max)));
 				box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, frame);
 				cols.forEach((col, i) => {
 					for (let py = 0; py < pixHeight; ++py)
