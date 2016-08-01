@@ -1,18 +1,18 @@
 'use strict';
 
-var pixWidth = 12,
-	pixHeight = 4,
-	pixSize = 12,
-	xOffset = 0,
-	yOffset = 0,
-	channelOffset = 4,
-	subPixSize = 1,
-	gamma = 1.2,
+var pixWidth = 5,
+	pixHeight = 2,
+	pixSize = 20,
+	xOffset = 2,
+	yOffset = 2,
+	channelOffset = 6,
+	subPixSize = 3,
+
 	pixGap = 0,
-	subPixGap = 0,
+	subPixGap = 1,
 	//cols = [ '#ff0000', '#00ff00', '#0000ff' ],
 	cols = [ "#f43353", "#0aa453", "#0d6ae9" ],
-	multiplier = .5, //.15,
+
 	black = '#000', //'#121011',
 	frame = '#000000';
 
