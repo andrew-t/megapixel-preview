@@ -41,12 +41,10 @@ document.addEventListener('DOMContentLoaded', e => {
 						imageData.data[i + 2]
 					],
 					max = pixHeight * pixWidth;
-				let xOffset = x * pixSize,
-					yOffset = y * pixSize;
 				// let grid = pixelizer(pixel.map(x => ~~(Math.pow(x / 255, 2.2) * max)));
 
 				// the real way:
-				/*let grid = pixelizer(pixel.map(x => ~~((x / 255) * max)));
+				let grid = pixelizer(pixel.map(x => ~~((x / 255) * max)));
 				box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, frame);
 				cols.forEach((col, i) => {
 					for (let py = 0; py < pixHeight; ++py)
@@ -56,9 +54,9 @@ document.addEventListener('DOMContentLoaded', e => {
 								subPixSize - subPixGap,
 								subPixSize - subPixGap,
 								grid[i][py][px] ? col : black);
-				});*/
+				});
 				// the way that works well for small images
-				box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, black);
+				/*box(x * pixSize, y * pixSize, pixSize - pixGap, pixSize - pixGap, black);
 				let done = [];
 				for (let i = 0; i < pixSize; ++i) done[i] = [];
 				for (let c = 0; c < 3; ++c) {
@@ -76,7 +74,7 @@ document.addEventListener('DOMContentLoaded', e => {
 							break;
 						}
 					}
-				}
+				}*/
 			}
 
 		function box(x, y, w, h, colour) {

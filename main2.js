@@ -32,8 +32,8 @@ for (let x = 0; x < image.width; ++x)
 			Math.pow(v, 2.2)));
 	}
 
-v2 = clamp(mmult(v, m));
-v3 = clamp(mmult(v2, p));
+// v2 = clamp(mmult(v, m));
+// v3 = clamp(mmult(v2, p));
 
 // v2 = scale(mmult(v, m));
 // v3 = scale(mmult(v2, p));
@@ -44,8 +44,8 @@ v3 = clamp(mmult(v2, p));
 // v2 = mmult(v, m);
 // v3 = mmult(v2, p);
 
-// v2 = mmult(v, m);
-// v3 = mmult(clamp(v2), p);
+v2 = mmult(v, m);
+v3 = mmult(clamp(v2), p);
 
 draw(v2, canvas, 1);
 draw(v3, canvas2, 1 / 2.2);
@@ -75,7 +75,7 @@ for (let y = 0; y < image.height; ++y) {
 		rows.push(row);
 	}
 	for (let x = 0; x < image.width; ++x) {
-		let pixel = v2[i++];
+		let pixel = clamp(v2)[i++];
 		for (let c = 0; c < 3; ++c) {
 			let cell = document.createElement('td');
 			cell.innerHTML = Math.round(pixel[c] * 100);
