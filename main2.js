@@ -9,6 +9,7 @@ var m = [[1.1,-0.04,-0.11],[0,2.75,-0.28],[0,-0.49,1.27]],
 
 var canvas = document.getElementById('canvas'),
 	canvas2 = document.getElementById('canvas2'),
+	excel = document.getElementById('xl'),
 	image = document.getElementById('image');
 image.addEventListener('load', e => {
 
@@ -48,6 +49,40 @@ v3 = clamp(mmult(v2, p));
 
 draw(v2, canvas, 1);
 draw(v3, canvas2, 1 / 2.2);
+
+// let rows = [];
+// for (let y = 0; y < image.height * 3; ++y) {
+// 	let row = document.createElement('tr');
+// 	excel.appendChild(row);
+// 	rows.push(row);
+// }
+// i = 0;
+// for (let x = 0; x < image.width; ++x)
+// 	for (let y = 0; y < image.height; ++y) {
+// 		let pixel = v2[i++];
+// 		for (let c = 0; c < 3; ++c) {
+// 			let cell = document.createElement('td');
+// 			cell.innerHTML = Math.round(pixel[c] * 100);
+// 			rows[y * 3 + c].appendChild(cell);
+// 		}
+// 	}
+i = 0;
+for (let y = 0; y < image.height; ++y) {
+	let rows = [];
+	for (let y = 0; y < 3; ++y) {
+		let row = document.createElement('tr');
+		excel.appendChild(row);
+		rows.push(row);
+	}
+	for (let x = 0; x < image.width; ++x) {
+		let pixel = v2[i++];
+		for (let c = 0; c < 3; ++c) {
+			let cell = document.createElement('td');
+			cell.innerHTML = Math.round(pixel[c] * 100);
+			rows[c].appendChild(cell);
+		}
+	}
+}
 
 canvas.addEventListener('mousemove', explain);
 canvas2.addEventListener('mousemove', explain);
